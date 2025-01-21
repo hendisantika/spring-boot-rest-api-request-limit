@@ -1,5 +1,6 @@
 package id.my.hendisantika.requestlimit.service;
 
+import id.my.hendisantika.requestlimit.entity.User;
 import id.my.hendisantika.requestlimit.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,4 +19,8 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+
+    public User getById(String id) {
+        return userRepository.getById(id);
+    }
 }
