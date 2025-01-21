@@ -27,4 +27,8 @@ public class PricingPlanService {
     public Bucket resolveBucketByUserPlan(UserPlan userPlan) {
         return PLAN_BUCKETS.computeIfAbsent(userPlan, this::newBucket);
     }
+
+    public Bucket resolveBucketByIp(String ipAddress) {
+        return IP_BUCKETS.computeIfAbsent(ipAddress, userPlan -> newBucket(UserPlan.FREE));
+    }
 }
