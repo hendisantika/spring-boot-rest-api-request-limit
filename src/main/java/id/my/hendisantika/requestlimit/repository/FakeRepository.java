@@ -22,7 +22,7 @@ import java.util.stream.Stream;
  */
 @Log4j2
 @Component
-class FakeRepository {
+public class FakeRepository {
     private static List<NameData> nameDataStream = new ArrayList<>();
 
     record NameData(String name) {
