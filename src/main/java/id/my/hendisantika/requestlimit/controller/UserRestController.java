@@ -1,5 +1,8 @@
 package id.my.hendisantika.requestlimit.controller;
 
+import id.my.hendisantika.requestlimit.entity.RtResponse;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -14,4 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class UserRestController {
+    @GetMapping(value = "/api/v1/rt/api-key")
+    public ResponseEntity<RtResponse> apiKeyResponse() {
+        return ResponseEntity.ok().body(rtResponse("Api-Key-"));
+    }
 }
