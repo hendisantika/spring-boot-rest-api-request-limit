@@ -33,4 +33,11 @@ public final class RateLimitErrorHandler {
                         "You have exhausted your API Request Quota, please try again in [%d] seconds.",
                         waitForRefill));
     }
+
+    public static void handleForbiddenError(
+            HttpServletResponse response, String header, String headerValue) {
+        response.addHeader(header, headerValue);
+
+        handleResponseError(response, HttpStatus.FORBIDDEN, "Forbidden");
+    }
 }
