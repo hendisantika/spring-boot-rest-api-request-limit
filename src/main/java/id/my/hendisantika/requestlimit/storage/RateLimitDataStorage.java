@@ -29,4 +29,7 @@ public final class RateLimitDataStorage {
         return STORAGE.get(apiKey);
     }
 
+    public static RateLimitData removeRateLimitData(String apiKey) {
+        return STORAGE.remove(apiKey);
+    }
 }
