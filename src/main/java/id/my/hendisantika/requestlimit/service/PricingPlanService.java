@@ -31,4 +31,9 @@ public class PricingPlanService {
     public Bucket resolveBucketByIp(String ipAddress) {
         return IP_BUCKETS.computeIfAbsent(ipAddress, userPlan -> newBucket(UserPlan.FREE));
     }
+
+    private Bucket newBucket(UserPlan userPlan) {
+        final PricingPlan pricingPlan = PricingPlan.resolvePricingFromUserPlan(userPlan);
+        return Bucket.builder().addLimit(pricingPlan.getLimit()).build();
+    }
 }
