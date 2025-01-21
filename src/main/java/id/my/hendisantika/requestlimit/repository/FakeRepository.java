@@ -1,11 +1,14 @@
 package id.my.hendisantika.requestlimit.repository;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Created by IntelliJ IDEA.
@@ -20,7 +23,7 @@ import java.util.stream.Collectors;
 @Log4j2
 @Component
 class FakeRepository {
-    private static final List<NameData> nameDataStream = new ArrayList<>();
+    private static List<NameData> nameDataStream = new ArrayList<>();
 
     record NameData(String name) {
     }
@@ -30,5 +33,16 @@ class FakeRepository {
         nameDataStream.add(new NameData("Gojo"));
         nameDataStream.add(new NameData("Geto"));
         log.info("====> data loaded {}", nameDataStream.stream().map(NameData::name).collect(Collectors.joining(",")));
+    }
+
+    @NoArgsConstructor(access = AccessLevel.PRIVATE)
+    static class Actions {
+        public static List<NameData> getAll() {
+            return nameDataStream;
+        }
+
+        public static void create(String name) {
+            nameDataStream = Stream.concat(nameDataStream.stream(), Stream.of(new NameData(name))).toList();
+        }
     }
 }
