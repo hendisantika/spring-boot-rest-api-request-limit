@@ -40,4 +40,8 @@ public final class RateLimitErrorHandler {
 
         handleResponseError(response, HttpStatus.FORBIDDEN, "Forbidden");
     }
+
+    public static void handleNoApiKeyErrorForbiddenError(HttpServletResponse response) {
+        handleResponseError(response, HttpStatus.FORBIDDEN, "There is no X-Api-Key in request");
+    }
 }
