@@ -26,4 +26,10 @@ public class UserRestController {
     public ResponseEntity<RtResponse> ipResponse() {
         return ResponseEntity.ok().body(rtResponse("Ip-"));
     }
+
+    private RtResponse rtResponse(String prefix) {
+        return new RtResponse()
+                .setKey(prefix + RandomStringUtils.randomAlphanumeric(8))
+                .setValue(prefix + RandomStringUtils.randomAlphanumeric(8));
+    }
 }
