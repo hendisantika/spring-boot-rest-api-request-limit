@@ -1,5 +1,6 @@
 package id.my.hendisantika.requestlimit.service;
 
+import id.my.hendisantika.requestlimit.config.PricingPlan;
 import id.my.hendisantika.requestlimit.entity.UserPlan;
 import io.github.bucket4j.Bucket;
 import lombok.RequiredArgsConstructor;
