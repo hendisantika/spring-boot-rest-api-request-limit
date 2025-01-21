@@ -56,4 +56,11 @@ public class UserRepository {
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("There is no user with api key: " + apiKey));
     }
+
+    public User getByUsername(String username) {
+        return STORAGE.values().stream()
+                .filter(rtUser -> username.equalsIgnoreCase(rtUser.getUsername()))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("There is no user with username: " + username));
+    }
 }
