@@ -25,4 +25,8 @@ public final class RateLimitDataStorage {
         return STORAGE.putIfAbsent(apiKey, rateLimitData);
     }
 
+    public static RateLimitData getRateLimitData(String apiKey) {
+        return STORAGE.get(apiKey);
+    }
+
 }
