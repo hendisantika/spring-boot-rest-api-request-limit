@@ -23,4 +23,8 @@ public class UserService {
     public User getById(String id) {
         return userRepository.getById(id);
     }
+
+    public User getByApiKey(String apiKey) {
+        return userRepository.getByApiKey(apiKey);
+    }
 }
