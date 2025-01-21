@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 /**
  * Created by IntelliJ IDEA.
@@ -26,5 +27,10 @@ class NameService {
         log.info("====> {}", this.getClass().getName());
         return Flux.fromIterable(FakeRepository.Actions.getAll())
                 .map(FakeRepository.NameData::name);
+    }
+
+    public Mono<Void> create(String name) {
+        FakeRepository.Actions.create(name);
+        return Mono.empty().then();
     }
 }
