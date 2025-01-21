@@ -20,4 +20,9 @@ public final class RateLimitDataStorage {
     private RateLimitDataStorage() {
         throw new RuntimeException();
     }
+
+    public static RateLimitData addRateLimitData(String apiKey, RateLimitData rateLimitData) {
+        return STORAGE.putIfAbsent(apiKey, rateLimitData);
+    }
+
 }
