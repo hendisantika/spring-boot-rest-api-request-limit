@@ -1,6 +1,7 @@
 package id.my.hendisantika.requestlimit.repository;
 
 import id.my.hendisantika.requestlimit.entity.User;
+import id.my.hendisantika.requestlimit.entity.UserPlan;
 import org.springframework.stereotype.Repository;
 
 import java.util.Map;
@@ -20,4 +21,25 @@ import java.util.concurrent.ConcurrentHashMap;
 public class UserRepository {
 
     private static final Map<String, User> STORAGE = new ConcurrentHashMap<>();
+
+    static {
+        STORAGE.put(
+                "00001",
+                new User()
+                        .setUsername("FreeUser")
+                        .setApiKey("d0476978-free-4ad5-94e8-38ebb575f5c4")
+                        .setUserPlan(UserPlan.FREE));
+        STORAGE.put(
+                "00002",
+                new User()
+                        .setUsername("BasicUser")
+                        .setApiKey("d0476978-base-4ad5-94e8-38ebb575f5c5")
+                        .setUserPlan(UserPlan.BASIC));
+        STORAGE.put(
+                "00003",
+                new User()
+                        .setUsername("ProUser")
+                        .setApiKey("d0476978-prof-4ad5-94e8-38ebb575f5c6")
+                        .setUserPlan(UserPlan.PRO));
+    }
 }
