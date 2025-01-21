@@ -4,6 +4,7 @@ import id.my.hendisantika.requestlimit.repository.FakeRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
 
 /**
  * Created by IntelliJ IDEA.
@@ -19,5 +20,11 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 class NameService {
-    private final FakeRepository daoRepo;
+    private final FakeRepository fakeRepository;
+
+    public Flux<String> getAllNames() {
+        log.info("====> {}", this.getClass().getName());
+        return Flux.fromIterable(FakeRepository.Actions.getAll())
+                .map(FakeRepository.NameData::name);
+    }
 }

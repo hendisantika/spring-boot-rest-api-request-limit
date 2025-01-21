@@ -25,7 +25,7 @@ import java.util.stream.Stream;
 public class FakeRepository {
     private static List<NameData> nameDataStream = new ArrayList<>();
 
-    record NameData(String name) {
+    public record NameData(String name) {
     }
 
     static {
@@ -36,7 +36,7 @@ public class FakeRepository {
     }
 
     @NoArgsConstructor(access = AccessLevel.PRIVATE)
-    static class Actions {
+    public static class Actions {
         public static List<NameData> getAll() {
             return nameDataStream;
         }
