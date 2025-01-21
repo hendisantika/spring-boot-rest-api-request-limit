@@ -42,4 +42,11 @@ public class UserRepository {
                         .setApiKey("d0476978-prof-4ad5-94e8-38ebb575f5c6")
                         .setUserPlan(UserPlan.PRO));
     }
+
+    public User getById(String id) {
+        return STORAGE.values().stream()
+                .filter(rtUser -> id.equalsIgnoreCase(rtUser.getId()))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("There is no user with id: " + id));
+    }
 }
