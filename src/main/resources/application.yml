@@ -43,3 +43,12 @@ management:
     web:
       exposure:
         include: "*"
+
+com:
+  klindziuk:
+    rate:
+      limit:
+        not:
+          allowed:
+            keys: d0476978-66cd-4ad5-94e8-38ebb575f5c9
+            ips: 0.0.0.0.2
