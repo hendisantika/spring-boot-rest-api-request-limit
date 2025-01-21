@@ -16,4 +16,8 @@ import java.util.concurrent.ConcurrentHashMap;
 public final class RateLimitDataStorage {
 
     private static final Map<String, RateLimitData> STORAGE = new ConcurrentHashMap<>();
+
+    private RateLimitDataStorage() {
+        throw new RuntimeException();
+    }
 }
