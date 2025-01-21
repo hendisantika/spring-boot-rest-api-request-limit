@@ -23,4 +23,8 @@ import java.util.concurrent.ConcurrentHashMap;
 public class PricingPlanService {
     private final Map<UserPlan, Bucket> PLAN_BUCKETS = new ConcurrentHashMap<>();
     private final Map<String, Bucket> IP_BUCKETS = new ConcurrentHashMap<>();
+
+    public Bucket resolveBucketByUserPlan(UserPlan userPlan) {
+        return PLAN_BUCKETS.computeIfAbsent(userPlan, this::newBucket);
+    }
 }
