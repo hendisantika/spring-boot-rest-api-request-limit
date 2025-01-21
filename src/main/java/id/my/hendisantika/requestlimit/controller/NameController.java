@@ -3,8 +3,11 @@ package id.my.hendisantika.requestlimit.controller;
 import id.my.hendisantika.requestlimit.service.NameService;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
@@ -33,5 +36,10 @@ class NameController {
     public ResponseEntity<Mono<List<String>>> getAll() {
         log.info("====> {}", this.getClass().getName());
         return ResponseEntity.ok(nameService.getAllNames().collectList());
+    }
+
+    @PostMapping(consumes = "text/plain")
+    public ResponseEntity<Mono<Void>> create(@RequestBody String name) {
+        return new ResponseEntity<>(nameService.create(name), HttpStatus.CREATED);
     }
 }
