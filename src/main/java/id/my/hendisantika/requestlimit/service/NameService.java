@@ -20,7 +20,7 @@ import reactor.core.publisher.Mono;
 @Log4j2
 @Service
 @AllArgsConstructor
-class NameService {
+public class NameService {
     private final FakeRepository fakeRepository;
 
     public Flux<String> getAllNames() {
