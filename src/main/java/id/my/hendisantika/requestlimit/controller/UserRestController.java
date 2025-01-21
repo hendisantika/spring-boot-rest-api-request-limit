@@ -21,4 +21,9 @@ public class UserRestController {
     public ResponseEntity<RtResponse> apiKeyResponse() {
         return ResponseEntity.ok().body(rtResponse("Api-Key-"));
     }
+
+    @GetMapping(value = "/api/v1/rt/ip")
+    public ResponseEntity<RtResponse> ipResponse() {
+        return ResponseEntity.ok().body(rtResponse("Ip-"));
+    }
 }
