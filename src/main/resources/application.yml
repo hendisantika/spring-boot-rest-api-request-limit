@@ -1,0 +1,45 @@
+logging:
+  level:
+    com.giffing.bucket4j.spring.boot.starter: debug
+debug: false
+
+server:
+  port: 8080
+# Caching configuration
+spring:
+  application:
+    name: spring-boot-rest-api-request-limit
+  cache:
+    type: hazelcast
+# Rate limit configuration
+bucket4j:
+  enabled: true
+  filter-config-caching-enabled: true
+  filter-config-cache-name: filterConfigCache
+  filters:
+    - cache-name: buckets
+      id: basic
+      filter-method: webflux
+      url: .*
+      http-status-code: too_many_requests
+      http-response-body:
+      filter-order: 1
+      rate-limits:
+        - bandwidths:
+            - capacity: 1000
+              time: 1
+              unit: seconds
+              refill-speed: interval
+      metrics:
+        enabled: true
+        tags:
+          - key: IP
+            expression: getRemoteAddress().getHostName() #look for ReactorServerHttpRequest
+            types: REJECTED_COUNTER # for data privacy reasons the IP should only be collected on bucket rejections
+
+# Add for metric
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
