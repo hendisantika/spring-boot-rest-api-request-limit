@@ -43,3 +43,52 @@ The final argument is simply the host. By default, it will hit http:// protocol 
 ```shell
  ab -k -c 350 -n 20000 http://localhost:8080/api/v1/names
 ```
+
+### Demo for Api Key Rate Limiting
+
+Lets call api/v1/rt/api-key endpoint using Free Plan api key first time:
+Test API Key Rate Limiting
+
+```shell
+ curl --location 'http://localhost:8080/api/v1/rt/api-key' \
+--header 'X-Api-Key: d0476978-free-4ad5-94e8-38ebb575f5c4' \
+--header 'Cookie: JSESSIONID=7A123ED176F7F8E2E1B3D040286F27B3'
+```
+
+Response:
+
+```json
+  {
+  "key": "Api-Key-1cqdfFnP",
+  "value": "Api-Key-EuQiXsFD"
+}
+```
+
+Response:
+
+```json
+{
+  "timestamp": "2025-01-22T00:52:47.693+00:00",
+  "status": 429,
+  "error": "Too Many Requests",
+  "message": "You have exhausted your API Request Quota, please try again in [3281] seconds.",
+  "path": "/api/v1/rt/api-key"
+}
+```
+
+Base Plan Rate Limiting
+
+```shell
+ curl --location 'http://localhost:8080/api/v1/rt/base-plan' \
+--header 'X-Api-Key: d0476978-base-4ad5-94e8-38ebb575f5c4' 
+```
+
+Response:
+
+```json
+{
+  "key": "Api-Key-9wUzs8dt",
+  "value": "Api-Key-tSjqGgdy"
+}
+
+```
