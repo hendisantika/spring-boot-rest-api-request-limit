@@ -133,3 +133,5 @@ Response:
   "path": "/api/v1/rt/ip"
 }
 ```
+
+We get Too Many Requests error and 429error status code, because calculation of the requests is based on IP address
