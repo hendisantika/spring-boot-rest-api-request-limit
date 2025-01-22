@@ -2,8 +2,11 @@ package id.my.hendisantika.requestlimit.interceptor;
 
 import id.my.hendisantika.requestlimit.config.RateLimitConfig;
 import id.my.hendisantika.requestlimit.constants.XHeader;
+import id.my.hendisantika.requestlimit.entity.User;
 import id.my.hendisantika.requestlimit.service.PricingPlanService;
 import id.my.hendisantika.requestlimit.service.UserService;
+import id.my.hendisantika.requestlimit.storage.RateLimitData;
+import id.my.hendisantika.requestlimit.storage.RateLimitDataStorage;
 import io.github.bucket4j.Bucket;
 import io.github.bucket4j.ConsumptionProbe;
 import jakarta.servlet.http.HttpServletRequest;
@@ -66,7 +69,7 @@ public class ApiKeyRateLimitRequestInterceptor implements HandlerInterceptor {
     private RateLimitData getRateLimitData(String apiKey) {
         RateLimitData rateLimitData = RateLimitDataStorage.getRateLimitData(apiKey);
         if (Objects.isNull(rateLimitData)) {
-            final RtUser userByApiKey = userService.getByApiKey(apiKey);
+            final User userByApiKey = userService.getByApiKey(apiKey);
             if (Objects.isNull(userByApiKey)) {
                 return null;
             }

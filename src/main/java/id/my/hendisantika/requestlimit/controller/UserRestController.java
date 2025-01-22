@@ -1,6 +1,7 @@
 package id.my.hendisantika.requestlimit.controller;
 
 import id.my.hendisantika.requestlimit.entity.RtResponse;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

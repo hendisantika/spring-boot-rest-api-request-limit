@@ -1,8 +1,10 @@
 package id.my.hendisantika.requestlimit.config;
 
-import com.hazelcast.map.impl.InterceptorRegistry;
+import id.my.hendisantika.requestlimit.interceptor.ApiKeyRateLimitRequestInterceptor;
+import id.my.hendisantika.requestlimit.interceptor.IpRateLimitRequestInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
