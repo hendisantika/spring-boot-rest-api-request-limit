@@ -92,3 +92,44 @@ Response:
 }
 
 ```
+
+### Demo for IP Rate Limiting
+
+Lets call api/v1/rt/ip endpoint using Free Plan api key first time:
+
+```shell
+ curl --location 'http://localhost:8080/api/v1/rt/ip' \
+--header 'X-Api-Key: d0476978-free-4ad5-94e8-38ebb575f5c4' 
+```
+
+Response:
+
+```json
+{
+  "key": "Api-Key-1cqdfFnP",
+  "value": "Api-Key-EuQiXsFD"
+}
+```
+
+``shell
+curl --location 'http://localhost:8080/api/v1/rt/ip' \
+--header 'X-Api-Key: d0476978-base-4ad5-94e8-38ebb575f5c4'
+
+```
+Response:
+```json
+{
+  "key": "Ip-C5nT7Sp9",
+  "value": "Ip-fTiQwHhD"
+}
+```
+
+```json
+{
+  "timestamp": "2025-01-22T01:24:53.391+00:00",
+  "status": 429,
+  "error": "Too Many Requests",
+  "message": "You have exhausted your API Request Quota, please try again in [3406] seconds.",
+  "path": "/api/v1/rt/ip"
+}
+```
