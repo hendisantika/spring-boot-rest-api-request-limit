@@ -15,7 +15,7 @@
     <description>spring-boot-rest-api-request-limit</description>
     <properties>
         <java.version>23</java.version>
-        <lombok.version>1.18.44</lombok.version>
+        <lombok.version>1.18.46</lombok.version>
     </properties>
     <dependencies>
         <dependency>
