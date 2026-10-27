@@ -1,5 +1,6 @@
 version: 2
 updates:
+  # Maven dependencies (pom.xml) and the Maven wrapper
   - package-ecosystem: maven
     directory: "/"
     schedule:
@@ -7,7 +8,58 @@ updates:
       time: '05:00'
       timezone: Asia/Jakarta
     open-pull-requests-limit: 10
-  - package-ecosystem: "github-actions"
+    target-branch: main
+    assignees:
+      - hendisantika
+    labels:
+      - dependencies
+      - java
+    commit-message:
+      prefix: "build"
+      prefix-development: "build"
+      include: scope
+    groups:
+      # Spring Boot parent and Spring artifacts move together
+      spring:
+        patterns:
+          - "org.springframework*"
+          - "io.micrometer*"
+        update-types:
+          - minor
+          - patch
+      bucket4j:
+        patterns:
+          - "com.bucket4j*"
+          - "com.giffing.bucket4j*"
+      hazelcast:
+        patterns:
+          - "com.hazelcast*"
+      maven-plugins:
+        patterns:
+          - "org.apache.maven*"
+      other-minor-and-patch:
+        update-types:
+          - minor
+          - patch
+
+  # GitHub Actions used in .github/workflows
+  - package-ecosystem: github-actions
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: daily
+      time: '05:00'
+      timezone: Asia/Jakarta
+    open-pull-requests-limit: 5
+    target-branch: main
+    assignees:
+      - hendisantika
+    labels:
+      - dependencies
+      - github_actions
+    commit-message:
+      prefix: "ci"
+      include: scope
+    groups:
+      github-actions:
+        patterns:
+          - "*"
