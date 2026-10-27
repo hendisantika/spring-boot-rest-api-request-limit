@@ -1,5 +1,62 @@
 # spring-boot-rest-api-request-limit
 
+[![Java CI with Maven](https://github.com/hendisantika/spring-boot-rest-api-request-limit/actions/workflows/maven.yml/badge.svg)](https://github.com/hendisantika/spring-boot-rest-api-request-limit/actions/workflows/maven.yml)
+![Java](https://img.shields.io/badge/Java-25-orange?logo=openjdk)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.1.2-brightgreen?logo=springboot)
+
+REST API rate limiting demo with Spring Boot, [Bucket4j](https://bucket4j.com/) and Hazelcast.
+
+## Tech Stack
+
+| Component            | Version                         |
+|----------------------|---------------------------------|
+| Java                 | 25 (Temurin in CI)              |
+| Spring Boot          | 4.1.2                           |
+| Bucket4j             | 8.10.1 (+ Spring Boot starter)  |
+| Hazelcast            | via `spring-boot-starter-hazelcast` |
+| Build tool           | Maven Wrapper (Maven 3.10.0)    |
+
+## Requirements
+
+- JDK 25
+- No local Maven needed: use the bundled `./mvnw`
+
+## Build & Run
+
+```shell
+./mvnw clean package   # compile + run tests
+./mvnw spring-boot:run # start on http://localhost:8080
+```
+
+Actuator/Prometheus metrics are exposed at `http://localhost:8080/actuator`.
+
+## Endpoints
+
+| Method | Path                 | Rate limited by                         |
+|--------|----------------------|-----------------------------------------|
+| GET    | `/api/v1/names`      | Global Bucket4j filter (1000 req/s)     |
+| POST   | `/api/v1/names`      | Global Bucket4j filter (1000 req/s)     |
+| GET    | `/api/v1/rt/api-key` | `X-Api-Key` header, per pricing plan    |
+| GET    | `/api/v1/rt/ip`      | Client IP address                       |
+
+### Pricing plans (refilled every hour)
+
+| Plan         | Requests / hour | Demo API key                           |
+|--------------|-----------------|----------------------------------------|
+| FREE         | 20              | `d0476978-free-4ad5-94e8-38ebb575f5c4` |
+| BASIC        | 40              | `d0476978-base-4ad5-94e8-38ebb575f5c5` |
+| PROFESSIONAL | 100             | `d0476978-prof-4ad5-94e8-38ebb575f5c6` |
+
+## CI/CD & Dependency Updates
+
+- **GitHub Actions** (`.github/workflows/maven.yml`): builds and tests with JDK 25 on every push / PR to `main`,
+  and submits the Maven dependency graph to GitHub on pushes.
+- **Dependabot** (`.github/dependabot.yml`): daily at 05:00 Asia/Jakarta for Maven and GitHub Actions.
+  Related updates are grouped (Spring, Bucket4j, Hazelcast, Maven plugins, GitHub Actions), labelled, and use
+  conventional commit prefixes (`build(deps)`, `ci(deps)`).
+
+## Background
+
 What is Rate Limiting?
 [Rate limiting](https://www.cloudflare.com/en-gb/learning/bots/what-is-rate-limiting/) is a strategy
 to [limit access to APIs](https://cloud.google.com/solutions/rate-limiting-strategies-techniques). It restricts the
@@ -46,13 +103,12 @@ The final argument is simply the host. By default, it will hit http:// protocol 
 
 ### Demo for Api Key Rate Limiting
 
-Lets call api/v1/rt/api-key endpoint using Free Plan api key first time:
+Let's call api/v1/rt/api-key endpoint using Free Plan api key first time:
 Test API Key Rate Limiting
 
 ```shell
  curl --location 'http://localhost:8080/api/v1/rt/api-key' \
---header 'X-Api-Key: d0476978-free-4ad5-94e8-38ebb575f5c4' \
---header 'Cookie: JSESSIONID=7A123ED176F7F8E2E1B3D040286F27B3'
+--header 'X-Api-Key: d0476978-free-4ad5-94e8-38ebb575f5c4'
 ```
 
 Response:
@@ -76,11 +132,11 @@ Response:
 }
 ```
 
-Base Plan Rate Limiting
+Basic Plan Rate Limiting
 
 ```shell
- curl --location 'http://localhost:8080/api/v1/rt/base-plan' \
---header 'X-Api-Key: d0476978-base-4ad5-94e8-38ebb575f5c4' 
+ curl --location 'http://localhost:8080/api/v1/rt/api-key' \
+--header 'X-Api-Key: d0476978-base-4ad5-94e8-38ebb575f5c5' 
 ```
 
 Response:
@@ -95,7 +151,7 @@ Response:
 
 ### Demo for IP Rate Limiting
 
-Lets call api/v1/rt/ip endpoint using Free Plan api key first time:
+Let's call api/v1/rt/ip endpoint using Free Plan api key first time:
 
 ```shell
  curl --location 'http://localhost:8080/api/v1/rt/ip' \
@@ -111,11 +167,11 @@ Response:
 }
 ```
 
-``shell
+```shell
 curl --location 'http://localhost:8080/api/v1/rt/ip' \
---header 'X-Api-Key: d0476978-base-4ad5-94e8-38ebb575f5c4'
-
+--header 'X-Api-Key: d0476978-base-4ad5-94e8-38ebb575f5c5'
 ```
+
 Response:
 ```json
 {
@@ -134,4 +190,4 @@ Response:
 }
 ```
 
-We get Too Many Requests error and 429error status code, because calculation of the requests is based on IP address
+We get Too Many Requests error and 429 error status code, because calculation of the requests is based on IP address
